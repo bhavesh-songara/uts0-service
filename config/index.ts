@@ -11,6 +11,12 @@ interface CommonConfig {
     projectId: string;
     location: string;
   };
+  auth0: {
+    clientId: string;
+    domain: string;
+  };
+  baseUrl: string;
+  appUrl: string;
 }
 
 let environmentConfig: EnvironmentConfig;

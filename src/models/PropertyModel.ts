@@ -26,7 +26,6 @@ export enum PropertyToolEnum {
 }
 
 export interface IProperty {
-  workspaceId: mongoose.Types.ObjectId | string;
   projectId: mongoose.Types.ObjectId | string;
   name: string;
   description?: string;
@@ -35,8 +34,8 @@ export interface IProperty {
   inputPropertyIds?: Array<mongoose.Types.ObjectId | string>;
   tool?: PropertyToolEnum;
   options?: Array<string>;
-  createdBy?: mongoose.Types.ObjectId | string;
-  updatedBy?: mongoose.Types.ObjectId | string;
+  createdBy?: string;
+  updatedBy?: string;
   isDeleted?: boolean;
 }
 
@@ -46,7 +45,6 @@ export interface IPropertyDocument extends IProperty {
 
 const propertySchema = new mongoose.Schema<IProperty>(
   {
-    workspaceId: { type: mongoose.Schema.ObjectId, required: true },
     projectId: { type: mongoose.Schema.ObjectId, required: true },
     name: { type: String, required: true },
     description: { type: String },
@@ -55,8 +53,8 @@ const propertySchema = new mongoose.Schema<IProperty>(
     inputPropertyIds: [{ type: mongoose.Schema.ObjectId }],
     tool: { type: String, enum: Object.values(PropertyToolEnum) },
     options: [{ type: String }],
-    createdBy: { type: mongoose.Schema.ObjectId },
-    updatedBy: { type: mongoose.Schema.ObjectId },
+    createdBy: { type: String },
+    updatedBy: { type: String },
     isDeleted: { type: Boolean, default: false },
   },
   {

@@ -1,1 +1,4 @@
-{}
+{
+  "baseUrl": "https://uts0-service.onrender.com",
+  "appUrl": "https://uts0.vercel.app"
+}

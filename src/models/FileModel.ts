@@ -2,12 +2,11 @@ import mongoose from "mongoose";
 import { coreDb } from "../connectors/mongodb";
 
 export interface IFile {
-  workspaceId: mongoose.Types.ObjectId | string;
   name: string;
   size: number;
   contentType: string;
   googleCloudStorageUri: string;
-  uploadedBy: mongoose.Types.ObjectId | string;
+  uploadedBy: string;
 }
 
 export interface IFileDocument extends IFile {
@@ -16,12 +15,11 @@ export interface IFileDocument extends IFile {
 
 const fileSchema = new mongoose.Schema<IFile>(
   {
-    workspaceId: { type: mongoose.Schema.ObjectId, required: true },
     name: { type: String, required: true },
     size: { type: Number, required: true },
     contentType: { type: String, required: true },
     googleCloudStorageUri: { type: String, required: true },
-    uploadedBy: { type: mongoose.Schema.ObjectId, required: true },
+    uploadedBy: { type: String },
   },
   {
     timestamps: true,

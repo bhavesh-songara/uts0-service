@@ -20,15 +20,14 @@ export enum FieldStatusEnum {
 }
 
 export interface IField {
-  workspaceId: mongoose.Types.ObjectId | string;
   entityId: mongoose.Types.ObjectId | string;
   propertyId: mongoose.Types.ObjectId | string;
   manualValue?: ValueType;
   toolValue?: ValueType;
   status: FieldStatusEnum;
   isDeleted?: boolean;
-  createdBy?: mongoose.Types.ObjectId | string;
-  updatedBy?: mongoose.Types.ObjectId | string;
+  createdBy?: string;
+  updatedBy?: string;
 }
 
 export interface IFieldDocument extends IField {
@@ -37,7 +36,6 @@ export interface IFieldDocument extends IField {
 
 export const fieldSchema = new mongoose.Schema<IField>(
   {
-    workspaceId: { type: mongoose.Schema.ObjectId, required: true },
     entityId: { type: mongoose.Schema.ObjectId, required: true },
     propertyId: { type: mongoose.Schema.ObjectId, required: true },
     manualValue: { type: mongoose.Schema.Types.Mixed },
@@ -48,8 +46,8 @@ export const fieldSchema = new mongoose.Schema<IField>(
       required: true,
     },
     isDeleted: { type: Boolean, default: false },
-    createdBy: { type: mongoose.Schema.ObjectId },
-    updatedBy: { type: mongoose.Schema.ObjectId },
+    createdBy: { type: String },
+    updatedBy: { type: String },
   },
   {
     timestamps: true,
