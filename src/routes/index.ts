@@ -1,9 +1,11 @@
 import { Router } from "express";
+import { requiresAuth } from "express-openid-connect";
 
 import { projectApis } from "./projectRoutes";
 import { authApis } from "./authRoutes";
 import { testApis } from "./testRoutes";
 import { healthCheckApis } from "./healthCheckRoutes";
+import { entityApis } from "./entityRoutes";
 
 export const apis = Router();
 
@@ -11,7 +13,8 @@ export const apis = Router();
 apis.use("/auth", authApis);
 
 // Core APIs
-apis.use("/project", projectApis);
+apis.use("/project", requiresAuth(), projectApis);
+apis.use("/entity", requiresAuth(), entityApis);
 
 // Test APIs
 apis.use("/test", testApis);

@@ -4,4 +4,11 @@ import { ProjectController } from "../controllers/ProjectController";
 
 export const projectApis = Router();
 
-// Define your routes here
+projectApis.post("/", asyncFunction(ProjectController.addProject));
+projectApis.put("/:projectId", asyncFunction(ProjectController.updateProject));
+projectApis.delete(
+  "/:projectId",
+  asyncFunction(ProjectController.deleteProject)
+);
+projectApis.get("/:projectId", asyncFunction(ProjectController.getProject));
+projectApis.get("/all", asyncFunction(ProjectController.getAllProjects));

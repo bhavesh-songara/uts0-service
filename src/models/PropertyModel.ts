@@ -34,8 +34,7 @@ export interface IProperty {
   inputPropertyIds?: Array<mongoose.Types.ObjectId | string>;
   tool?: PropertyToolEnum;
   options?: Array<string>;
-  createdBy?: string;
-  updatedBy?: string;
+  userId: string;
   isDeleted?: boolean;
 }
 
@@ -53,8 +52,7 @@ const propertySchema = new mongoose.Schema<IProperty>(
     inputPropertyIds: [{ type: mongoose.Schema.ObjectId }],
     tool: { type: String, enum: Object.values(PropertyToolEnum) },
     options: [{ type: String }],
-    createdBy: { type: String },
-    updatedBy: { type: String },
+    userId: { type: String, required: true },
     isDeleted: { type: Boolean, default: false },
   },
   {

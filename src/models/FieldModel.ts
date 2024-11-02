@@ -26,8 +26,7 @@ export interface IField {
   toolValue?: ValueType;
   status: FieldStatusEnum;
   isDeleted?: boolean;
-  createdBy?: string;
-  updatedBy?: string;
+  userId: string;
 }
 
 export interface IFieldDocument extends IField {
@@ -46,8 +45,7 @@ export const fieldSchema = new mongoose.Schema<IField>(
       required: true,
     },
     isDeleted: { type: Boolean, default: false },
-    createdBy: { type: String },
-    updatedBy: { type: String },
+    userId: { type: String, required: true },
   },
   {
     timestamps: true,

@@ -3,9 +3,8 @@ import { coreDb } from "../connectors/mongodb";
 
 export interface IEntity {
   projectId: mongoose.Types.ObjectId | string;
-  createdBy?: string;
-  updatedBy?: string;
   isDeleted?: boolean;
+  userId: string;
 }
 
 export interface IEntityDocument extends IEntity {
@@ -15,8 +14,7 @@ export interface IEntityDocument extends IEntity {
 const entitySchema = new mongoose.Schema<IEntity>(
   {
     projectId: { type: mongoose.Schema.ObjectId, required: true },
-    createdBy: { type: String },
-    updatedBy: { type: String },
+    userId: { type: String, required: true },
     isDeleted: { type: Boolean, default: false },
   },
   {

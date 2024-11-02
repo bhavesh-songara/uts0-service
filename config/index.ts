@@ -15,7 +15,7 @@ interface CommonConfig {
     clientId: string;
     domain: string;
   };
-  baseUrl: string;
+  serviceUrl: string;
   appUrl: string;
 }
 

@@ -8,6 +8,7 @@ import {
   AUTH0_CALLBACK_URL,
   AUTH0_LOGOUT_URL,
 } from "../constants/Auth0";
+import { logger } from "../utils/logger";
 
 export const authApis = Router();
 
@@ -27,7 +28,6 @@ authApis.use(
 );
 
 authApis.get("/login", (req: Request, res: Response) => {
-  console.log("login");
   res.oidc.login({
     returnTo: AUTH0_LOGIN_SUCCESS_URL,
     authorizationParams: {
@@ -37,21 +37,18 @@ authApis.get("/login", (req: Request, res: Response) => {
 });
 
 authApis.get("/callback", (req: Request, res: Response) => {
-  console.log("callback");
   res.oidc.callback({
     redirectUri: AUTH0_LOGIN_SUCCESS_URL,
   });
 });
 
 authApis.post("/callback", (req: Request, res: Response) => {
-  console.log("callback");
   res.oidc.callback({
     redirectUri: AUTH0_LOGIN_SUCCESS_URL,
   });
 });
 
 authApis.get("/logout", (req: Request, res: Response) => {
-  console.log("logout");
   res.oidc.logout({
     returnTo: AUTH0_LOGOUT_URL,
   });

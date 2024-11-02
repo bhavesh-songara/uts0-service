@@ -45,9 +45,10 @@ export class ${moduleName}Service {
   
 }`;
 
-  const controllerClassContent = `import { validateJoiSchema } from '../utils/validateJoiSchema';
-import { Request, Response } from 'express';
+  const controllerClassContent = `import { Request, Response } from 'express';
 import Joi from 'joi';
+
+import { validateJoiSchema } from '../utils/validateJoiSchema';
 import {${moduleName}Service} from "../services/${serviceName?.replace(
     ".ts",
     ""

@@ -4,8 +4,7 @@ import { coreDb } from "../connectors/mongodb";
 export interface IProject {
   name: string;
   description?: string;
-  createdBy?: string;
-  updatedBy?: string;
+  userId: string;
   isDeleted?: boolean;
 }
 
@@ -17,8 +16,7 @@ const projectSchema = new mongoose.Schema<IProject>(
   {
     name: { type: String, required: true },
     description: { type: String },
-    createdBy: { type: String },
-    updatedBy: { type: String },
+    userId: { type: String, required: true },
     isDeleted: { type: Boolean, default: false },
   },
   {

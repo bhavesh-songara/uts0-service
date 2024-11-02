@@ -8,6 +8,6 @@
     "clientId": "s16UWX4q2EUV1bxL59Jq8L3bTgyEzCa5",
     "domain": "https://dev-t6oo3pxk5g3ndvy5.us.auth0.com"
   },
-  "baseUrl": "http://localhost:8080",
+  "serviceUrl": "http://localhost:8080",
   "appUrl": "http://localhost:3000"
 }
