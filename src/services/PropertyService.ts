@@ -9,6 +9,11 @@ import {
 } from "../models";
 import { PropertyHelper } from "../helpers/PropertyHelper";
 
+/**
+ * TODO:
+ * - When adding new property add jobs to calculate the properties for the existing entities
+ */
+
 // Add your service methods here
 export class PropertyService {
   static async addProperty(payload: {
@@ -47,6 +52,12 @@ export class PropertyService {
       projectId,
       userId,
     });
+
+    if (type === PropertyTypeEnum.File && tool == PropertyToolEnum.User) {
+      throw new createHttpError.BadRequest(
+        "Invalid property type and tool combination"
+      );
+    }
 
     await PropertyModel.create({
       projectId,

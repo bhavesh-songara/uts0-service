@@ -7,6 +7,7 @@ import { testApis } from "./testRoutes";
 import { healthCheckApis } from "./healthCheckRoutes";
 import { entityApis } from "./entityRoutes";
 import { propertyApis } from "./propertyRoutes";
+import { fieldApis } from "./fieldRoutes";
 
 export const apis = Router();
 
@@ -17,6 +18,7 @@ apis.use("/auth", authApis);
 apis.use("/project", requiresAuth(), projectApis);
 apis.use("/entity", requiresAuth(), entityApis);
 apis.use("/property", requiresAuth(), propertyApis);
+apis.use("/field", requiresAuth(), fieldApis);
 
 // Test APIs
 apis.use("/test", testApis);

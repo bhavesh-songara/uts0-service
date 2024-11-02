@@ -17,6 +17,8 @@ interface CommonConfig {
   };
   serviceUrl: string;
   appUrl: string;
+  maxFileSizeInMb: number;
+  storageBucket: string;
 }
 
 let environmentConfig: EnvironmentConfig;

@@ -3,6 +3,7 @@ import { EntityModel, FieldModel, ProjectModel } from "../models";
 
 /**
  * TODO:
+ * - When adding new entity add jobs to calculate the properties for the entity
  */
 
 // Add your service methods here

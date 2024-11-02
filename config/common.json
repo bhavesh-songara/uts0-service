@@ -9,5 +9,7 @@
     "domain": "https://dev-t6oo3pxk5g3ndvy5.us.auth0.com"
   },
   "serviceUrl": "http://localhost:8080",
-  "appUrl": "http://localhost:3000"
+  "appUrl": "http://localhost:3000",
+  "maxFileSizeInMb": 10,
+  "storageBucket": "uts0-client-files"
 }
