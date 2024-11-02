@@ -1,5 +1,16 @@
 import createHttpError from "http-errors";
-import { ProjectModel } from "../models";
+
+import {
+  EntityModel,
+  FieldModel,
+  ProjectModel,
+  PropertyModel,
+} from "../models";
+
+/**
+ * TODO:
+ * - When adding new project add three entities to the project with one property each
+ */
 
 // Add your service methods here
 export class ProjectService {
@@ -51,6 +62,21 @@ export class ProjectService {
     if (!result) {
       throw new createHttpError.NotFound("Project not found");
     }
+
+    await Promise.all([
+      EntityModel.updateMany(
+        { projectId, userId, isDeleted: false },
+        { isDeleted: true }
+      ),
+      PropertyModel.updateMany(
+        { projectId, userId, isDeleted: false },
+        { isDeleted: true }
+      ),
+      FieldModel.updateMany(
+        { projectId, userId, isDeleted: false },
+        { isDeleted: true }
+      ),
+    ]);
   }
 
   static async getProject(payload: { projectId: string; userId: string }) {

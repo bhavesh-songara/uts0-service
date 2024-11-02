@@ -32,7 +32,7 @@ export interface IProperty {
   type: PropertyTypeEnum;
   prompt?: string;
   inputPropertyIds?: Array<mongoose.Types.ObjectId | string>;
-  tool?: PropertyToolEnum;
+  tool: PropertyToolEnum;
   options?: Array<string>;
   userId: string;
   isDeleted?: boolean;
@@ -50,7 +50,11 @@ const propertySchema = new mongoose.Schema<IProperty>(
     type: { type: String, enum: PropertyTypeEnum, required: true },
     prompt: { type: String },
     inputPropertyIds: [{ type: mongoose.Schema.ObjectId }],
-    tool: { type: String, enum: Object.values(PropertyToolEnum) },
+    tool: {
+      type: String,
+      enum: Object.values(PropertyToolEnum),
+      required: true,
+    },
     options: [{ type: String }],
     userId: { type: String, required: true },
     isDeleted: { type: Boolean, default: false },

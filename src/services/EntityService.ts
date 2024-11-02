@@ -1,5 +1,9 @@
 import createHttpError from "http-errors";
-import { EntityModel, ProjectModel } from "../models";
+import { EntityModel, FieldModel, ProjectModel } from "../models";
+
+/**
+ * TODO:
+ */
 
 // Add your service methods here
 export class EntityService {
@@ -34,6 +38,13 @@ export class EntityService {
     if (!result) {
       throw new createHttpError.NotFound("Entity not found");
     }
+
+    await FieldModel.updateMany(
+      { entityId, userId },
+      {
+        isDeleted: true,
+      }
+    );
   }
 
   static async getEntity(payload: { entityId: string; userId: string }) {
