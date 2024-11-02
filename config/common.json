@@ -1,0 +1,7 @@
+{
+  "servicePort": 8080,
+  "googleCloud": {
+    "projectId": "uts0",
+    "location": "us-central1"
+  }
+}
