@@ -26,7 +26,7 @@ export interface IField {
   toolValue?: ValueType;
   status: FieldStatusEnum;
   isDeleted?: boolean;
-  userId: string;
+  userId: mongoose.Types.ObjectId | string;
 }
 
 export interface IFieldDocument extends IField {
@@ -45,7 +45,7 @@ export const fieldSchema = new mongoose.Schema<IField>(
       required: true,
     },
     isDeleted: { type: Boolean, default: false },
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.ObjectId, required: true },
   },
   {
     timestamps: true,

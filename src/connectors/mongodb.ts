@@ -17,7 +17,7 @@ export class MongoDBConnector {
     }
   }
 
-  private static getMongoUrl() {
+  static getMongoUrl() {
     return `mongodb+srv://${this.username}:${this.password}@${this.host}`;
   }
 

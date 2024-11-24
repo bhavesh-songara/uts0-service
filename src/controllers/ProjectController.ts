@@ -7,8 +7,7 @@ import { ProjectService } from "../services/ProjectService";
 // Add your controller methods here
 export class ProjectController {
   static async addProject(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
-
+    const userId = req.user?._id as string;
     const { name, description } = req.body;
 
     validateJoiSchema({
@@ -27,7 +26,7 @@ export class ProjectController {
   }
 
   static async updateProject(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { projectId } = req.params;
     const { name, description } = req.body;
 
@@ -53,7 +52,7 @@ export class ProjectController {
   }
 
   static async deleteProject(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { projectId } = req.params;
 
     validateJoiSchema({
@@ -71,7 +70,7 @@ export class ProjectController {
   }
 
   static async getProject(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { projectId } = req.params;
 
     validateJoiSchema({
@@ -87,7 +86,7 @@ export class ProjectController {
   }
 
   static async getAllProjects(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
 
     const result = await ProjectService.getAllProjects({ userId });
 

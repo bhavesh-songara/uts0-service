@@ -19,23 +19,9 @@ export class PropertyService {
   static async addProperty(payload: {
     projectId: string;
     userId: string;
-    name: string;
-    description?: string;
     type: PropertyTypeEnum;
-    prompt?: string;
-    tool: PropertyToolEnum;
-    options?: Array<string>;
   }) {
-    const {
-      projectId,
-      userId,
-      name,
-      description,
-      type,
-      prompt,
-      tool,
-      options,
-    } = payload;
+    const { projectId, userId, type } = payload;
 
     const project = await ProjectModel.findOne({
       _id: projectId,
@@ -47,28 +33,18 @@ export class PropertyService {
       throw new createHttpError.NotFound("Project not found");
     }
 
-    const { inputPropertyIds } = await PropertyHelper.validatePrompt({
-      prompt,
-      projectId,
-      userId,
-    });
+    let tool = PropertyToolEnum.Gpt4Omni;
 
-    if (type === PropertyTypeEnum.File && tool == PropertyToolEnum.User) {
-      throw new createHttpError.BadRequest(
-        "Invalid property type and tool combination"
-      );
+    if (type === PropertyTypeEnum.File) {
+      tool = PropertyToolEnum.User;
     }
 
     await PropertyModel.create({
+      name: "New Property",
       projectId,
       userId,
-      name,
-      description,
       type,
-      prompt,
-      inputPropertyIds,
       tool,
-      options,
     });
   }
 

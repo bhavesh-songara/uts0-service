@@ -6,7 +6,7 @@ import { EntityService } from "../services/EntityService";
 // Add your controller methods here
 export class EntityController {
   static async addEntity(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { projectId } = req.body;
 
     validateJoiSchema({
@@ -24,7 +24,7 @@ export class EntityController {
   }
 
   static async deleteEntity(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { entityId } = req.params;
 
     validateJoiSchema({
@@ -42,7 +42,7 @@ export class EntityController {
   }
 
   static async getEntity(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { entityId } = req.params;
 
     validateJoiSchema({
@@ -58,7 +58,7 @@ export class EntityController {
   }
 
   static async getEntities(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { projectId } = req.params;
     const { page = 0, size = 10 } = req.query;
 

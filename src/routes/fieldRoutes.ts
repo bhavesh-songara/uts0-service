@@ -5,4 +5,4 @@ import { FieldController } from "../controllers/FieldController";
 export const fieldApis = Router();
 
 // Define your routes here
-fieldApis.post("/", asyncFunction(FieldController.updateField));
+fieldApis.put("/", asyncFunction(FieldController.updateField));

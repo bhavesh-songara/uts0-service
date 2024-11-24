@@ -6,7 +6,7 @@ export interface IFile {
   size: number;
   contentType: string;
   googleCloudStorageUri: string;
-  userId: string;
+  userId: mongoose.Types.ObjectId | string;
 }
 
 export interface IFileDocument extends IFile {
@@ -19,7 +19,7 @@ const fileSchema = new mongoose.Schema<IFile>(
     size: { type: Number, required: true },
     contentType: { type: String, required: true },
     googleCloudStorageUri: { type: String, required: true },
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.ObjectId, required: true },
   },
   {
     timestamps: true,

@@ -1,61 +1,61 @@
-import { Router, Request, Response } from "express";
-import { auth } from "express-openid-connect";
-
-import config from "../../config";
+import { Request, Response, Router } from "express";
+import passport from "passport";
+import asyncFunction from "express-async-handler";
 import {
-  AUTH0_LOGIN_SUCCESS_URL,
-  AUTH0_BASE_URL,
-  AUTH0_CALLBACK_URL,
-  AUTH0_LOGOUT_URL,
-} from "../constants/Auth0";
-import { logger } from "../utils/logger";
+  GOOGLE_AUTH_FAILURE_REDIRECT_URL,
+  GOOGLE_AUTH_SUCCESS_REDIRECT_URL,
+} from "../constants/Auth";
+
+import { UserModel } from "../models/UserModel";
+import createHttpError from "http-errors";
+import { ensureAuthenticated } from "../middlewares/auth";
 
 export const authApis = Router();
 
-authApis.use(
-  auth({
-    authRequired: false,
-    auth0Logout: true,
-    secret: process.env.AUTH0_SECRET as string,
-    baseURL: AUTH0_BASE_URL,
-    clientID: config.auth0.clientId,
-    issuerBaseURL: config.auth0.domain,
-    routes: {
-      login: false,
-      logout: false,
-    },
+// Define your routes here
+authApis.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+authApis.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: GOOGLE_AUTH_SUCCESS_REDIRECT_URL,
+    failureRedirect: GOOGLE_AUTH_FAILURE_REDIRECT_URL,
   })
 );
 
-authApis.get("/login", (req: Request, res: Response) => {
-  res.oidc.login({
-    returnTo: AUTH0_LOGIN_SUCCESS_URL,
-    authorizationParams: {
-      redirect_uri: AUTH0_CALLBACK_URL,
-    },
-  });
-});
+authApis.get(
+  "/logout",
+  asyncFunction((req: Request, res: Response) => {
+    req.logout(
+      {
+        keepSessionInfo: false,
+      },
+      (err) => {
+        if (err) {
+          throw new createHttpError.InternalServerError("Logout failed");
+        } else {
+          res.send({
+            message: "Logged out successfully",
+          });
+        }
+      }
+    );
+  })
+);
 
-authApis.get("/callback", (req: Request, res: Response) => {
-  res.oidc.callback({
-    redirectUri: AUTH0_LOGIN_SUCCESS_URL,
-  });
-});
+authApis.get(
+  "/me",
+  ensureAuthenticated,
+  asyncFunction(async (req: Request, res: Response) => {
+    const userId = req.user?._id;
 
-authApis.post("/callback", (req: Request, res: Response) => {
-  res.oidc.callback({
-    redirectUri: AUTH0_LOGIN_SUCCESS_URL,
-  });
-});
+    const user = await UserModel.findOne({ _id: userId });
 
-authApis.get("/logout", (req: Request, res: Response) => {
-  res.oidc.logout({
-    returnTo: AUTH0_LOGOUT_URL,
-  });
-});
-
-authApis.get("/me", (req: Request, res: Response) => {
-  const isAuth = req.oidc.isAuthenticated();
-  const user = req.oidc?.user;
-  res.send({ user, isAuthenticated: isAuth });
-});
+    res.send({
+      user,
+    });
+  })
+);

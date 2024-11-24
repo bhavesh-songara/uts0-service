@@ -11,10 +11,6 @@ interface CommonConfig {
     projectId: string;
     location: string;
   };
-  auth0: {
-    clientId: string;
-    domain: string;
-  };
   serviceUrl: string;
   appUrl: string;
   maxFileSizeInMb: number;

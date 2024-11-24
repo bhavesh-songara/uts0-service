@@ -9,7 +9,7 @@ import { FileUtils } from "../utils/file";
 // Add your controller methods here
 export class FieldController {
   static async updateField(req: Request, res: Response) {
-    const userId = req.oidc?.user?.sub as string;
+    const userId = req.user?._id as string;
 
     const { fields, files } = await FileUtils.parseFiles(req);
 

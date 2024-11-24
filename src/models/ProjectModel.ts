@@ -4,7 +4,7 @@ import { coreDb } from "../connectors/mongodb";
 export interface IProject {
   name: string;
   description?: string;
-  userId: string;
+  userId: mongoose.Types.ObjectId | string;
   isDeleted?: boolean;
 }
 
@@ -16,7 +16,7 @@ const projectSchema = new mongoose.Schema<IProject>(
   {
     name: { type: String, required: true },
     description: { type: String },
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.ObjectId, required: true },
     isDeleted: { type: Boolean, default: false },
   },
   {

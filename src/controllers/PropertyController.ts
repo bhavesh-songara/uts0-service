@@ -8,36 +8,23 @@ import { PropertyToolEnum, PropertyTypeEnum } from "../models";
 // Add your controller methods here
 export class PropertyController {
   static async addProperty(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
-    const { projectId, name, description, type, prompt, tool, options } =
-      req.body;
+    const userId = req.user?._id as string;
+    const { projectId, type } = req.body;
 
     validateJoiSchema({
       schema: Joi.object({
         projectId: Joi.string().hex().length(24).required(),
-        name: Joi.string().trim().required(),
-        description: Joi.string().allow("").optional(),
         type: Joi.string()
           .valid(...Object.values(PropertyTypeEnum))
           .required(),
-        prompt: Joi.string().allow("").optional(),
-        tool: Joi.string()
-          .valid(...Object.values(PropertyToolEnum))
-          .required(),
-        options: Joi.array().items(Joi.string()).optional(),
       }),
-      data: { projectId, name, description, type, prompt, tool, options },
+      data: { projectId, type },
     });
 
     await PropertyService.addProperty({
       projectId,
       userId,
-      name,
-      description,
       type,
-      prompt,
-      tool,
-      options,
     });
 
     res.send({
@@ -46,7 +33,7 @@ export class PropertyController {
   }
 
   static async updateProperty(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { propertyId } = req.params;
     const { name, description, prompt, tool, options } = req.body;
 
@@ -80,7 +67,7 @@ export class PropertyController {
   }
 
   static async deleteProperty(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { propertyId } = req.params;
 
     validateJoiSchema({
@@ -98,7 +85,7 @@ export class PropertyController {
   }
 
   static async getProperty(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { propertyId } = req.params;
 
     validateJoiSchema({
@@ -114,7 +101,7 @@ export class PropertyController {
   }
 
   static async getAllProperties(req: Request, res: Response) {
-    const userId = req.oidc.user?.sub;
+    const userId = req.user?._id as string;
     const { projectId } = req.params;
 
     validateJoiSchema({

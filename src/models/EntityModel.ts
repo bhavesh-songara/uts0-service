@@ -4,7 +4,7 @@ import { coreDb } from "../connectors/mongodb";
 export interface IEntity {
   projectId: mongoose.Types.ObjectId | string;
   isDeleted?: boolean;
-  userId: string;
+  userId: mongoose.Types.ObjectId | string;
 }
 
 export interface IEntityDocument extends IEntity {
@@ -14,7 +14,7 @@ export interface IEntityDocument extends IEntity {
 const entitySchema = new mongoose.Schema<IEntity>(
   {
     projectId: { type: mongoose.Schema.ObjectId, required: true },
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.ObjectId, required: true },
     isDeleted: { type: Boolean, default: false },
   },
   {

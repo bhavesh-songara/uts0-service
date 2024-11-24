@@ -33,10 +33,10 @@ export const errorHandler = (
       message: err.message,
       statusCode: err.statusCode,
     });
+  } else {
+    res.status(500).json({
+      message: "Internal Server Error",
+      statusCode: 500,
+    });
   }
-
-  res.status(500).json({
-    message: "Internal Server Error",
-    statusCode: 500,
-  });
 };
